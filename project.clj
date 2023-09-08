@@ -14,7 +14,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure   "1.11.1"]
                  [org.clojure/tools.cli "1.0.219"]
-                 [conexp-clj            "2.3.0"]]
+                 [conexp-clj            "2.3.1-SNAPSHOT"]]
   :main ^:skip-aot fca-clj.core
   :target-path "builds/%s"
   :profiles {:uberjar {:aot :all

@@ -38,7 +38,7 @@
                                                                 :dimension [1000 1000])
                                    scene (:scene frame-and-scene)]
                                (show-labels scene true)
-                               (Thread/sleep 500) ;; make sure that the scene is fully drawn
+                               (Thread/sleep 1000) ;; make sure that the scene is fully drawn
                                (save-image scene (io/as-file (:output options)) "png"))
                              (System/exit 0))
     "save-concept-lattice-dimdraw" (fn [context] 
@@ -49,7 +49,7 @@
                                                                         :dimension [1000 1000])
                                            scene (:scene frame-and-scene)]
                                        (show-labels scene true)
-                                       (Thread/sleep 500) ;; make sure that the scene is fully drawn
+                                       (Thread/sleep 1000) ;; make sure that the scene is fully drawn
                                        (save-image scene (io/as-file (:output options)) "png"))
                                      (System/exit 0))
     nil))
