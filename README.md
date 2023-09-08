@@ -1,32 +1,29 @@
 # fca-clj
 
-FIXME: description
-
-## Installation
-
-Download from http://example.com/FIXME.
+A command line tool for some functions of the [conexp-clj](https://github.com/tomhanika/conexp-clj) tool for Formal Concept Analysis.
 
 ## Usage
 
-FIXME: explanation
+The standalone jar (in builds/uberjar) can be used via:
 
-    $ java -jar fca-clj-0.1.0-standalone.jar [args]
+    $ java -jar fca-clj-0.1.0-SNAPSHOT-standalone.jar [args]
+
+The arguments are:
+
+```
+-f, --function FUNCTION  Function to be executed.
+-i, --input FILE         Input file path (for context file).
+-o, --output FILE        Output file path (for output of the fca analysis).
+-h, --help
+```
 
 ## Options
 
-FIXME: listing of options this app accepts.
+Supported functions are:
 
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+- `draw-concept-lattice` - Draw the concept lattice of the context input using gui tool of conexp-clj. With this option, it is possible to manually edit and save the result.
+- `save-concept-lattice` - Save the concept lattice of the context input. The default layout is used.
+- `save-concept-lattice-dimdraw` - Save the concept lattice of the context input, using the dim-draw layout. This is only recommended for small contexts, as the computation of the dim-draw layout takes much time.
 
 ## License
 
