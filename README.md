@@ -25,6 +25,12 @@ Supported functions are:
 - `save-concept-lattice` - Save the concept lattice of the context input. The default layout is used.
 - `save-concept-lattice-dimdraw` - Save the concept lattice of the context input, using the dim-draw layout. This is only recommended for small contexts, as the computation of the dim-draw layout takes much time.
 
+## Example
+
+There is an example context given in the testing-data folder. To save an image of a concept lattice in dim-draw layout, the following command can be used (directly from the fca-clj directory):
+
+   $ java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f save-concept-lattice-dimdraw -i testing-data/living-beings-and-water.cxt -o test.png
+
 ## License
 
 Copyright © 2023 FIXME
