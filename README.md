@@ -29,7 +29,7 @@ Supported functions are:
 
 There is an example context given in the testing-data folder. To save an image of a concept lattice in dim-draw layout, the following command can be used (directly from the fca-clj directory):
 
-   $ java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f save-concept-lattice-dimdraw -i testing-data/living-beings-and-water.cxt -o test.png
+    $ java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f save-concept-lattice-dimdraw -i testing-data/living-beings-and-water.cxt -o test.png
 
 ## License
 
