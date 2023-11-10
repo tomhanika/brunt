@@ -9,6 +9,7 @@
 
 
 ;;Function todo:
+;;rand-ctx
 ;;(objects ctx)
 ;;(attributes ctx)
 ;;(incidence ctx)
@@ -30,69 +31,24 @@
             [conexp.gui.draw.scenes :refer [save-image show-labels]]
             [conexp.io.contexts :refer [read-context]]
             [conexp.layouts :refer [standard-layout]]
-            [conexp.layouts.dim-draw :refer [dim-draw-layout]])
+            [conexp.layouts.dim-draw :refer [dim-draw-layout]]
+            [fca-clj.functions :refer :all])
   (:gen-class))
 
 (def cli-options
   "Command line options for fca-clj."
   [["-f" "--function FUNCTION" "Function to be executed."]
-   ["-i" "--input FILE" "Input file path (for context file)."]
-   ["-o" "--output FILE" "Output file path (for output of the fca analysis)."]
    ["-h" "--help"]])
 
-(def func-list ["draw-concept-lattice" 
-                "save-concept-lattice" 
-                "save-concept-lattice-dimdraw"])
 
-(defn- get-function
-  "Convert function string to function."
-  [func-str]
-  (case func-str
-    "draw-concept-lattice" (fn [ctx-path] 
-                                (draw-concept-lattice (read-context ctx-path)))
-
-    "save-concept-lattice" (fn [ctx-path save-path] 
-                                (let [ctx (read-context ctx-path)
-                                      concept-lattice (concept-lattice ctx)
-                                      layout (standard-layout concept-lattice)
-                                      frame-and-scene (draw-layout layout 
-                                                                   :visible true
-                                                                   :dimension [1000 1000])
-                                      scene (:scene frame-and-scene)]
-                               (show-labels scene true)
-                               (Thread/sleep 1000) ;; make sure that the scene is fully drawn
-                               (save-image scene (io/as-file save-path) "png"))
-                             (System/exit 0))
-
-    "save-concept-lattice-dimdraw" (fn [ctx-path save-path] 
-                                        (let [ctx (read-context ctx-path)
-                                              concept-lattice (concept-lattice ctx)
-                                              layout (dim-draw-layout concept-lattice)
-                                              frame-and-scene (draw-layout layout 
-                                                                           :visible true
-                                                                           :dimension [1000 1000])
-                                              scene (:scene frame-and-scene)]
-                                       (show-labels scene true)
-                                       (Thread/sleep 1000) ;; make sure that the scene is fully drawn
-                                       (save-image scene (io/as-file save-path) "png"))
-                                     (System/exit 0))                             
-    nil))
-
-(defn- get-args
-  "Returns Parameter Explanation for Functions."
-  [func]
-  (case func
-  
-  "draw-concept-lattice" ["Context File Path"]
-  "save-concept-lattice" ["Context File Path" "Output File Path"]
-  "save-concept-lattice-dimdraw" ["Context File Path" "Output File Path"]
-  nil))
 
 (defn- display-help
   []
   (println "Enter -h for help.")
-  (println "Use -f to enter a function followed by its parameters.")
-  (println "Available functions with their parameters:")
+  (println "Use -f to enter a function followed by its parameters.\n")
+  (println "Sets can be entered as follows: \"#{1 2 3}\"")
+  (println "Sets containing string values need to be entered as follows: \"#{\\\"a\\\" \\\"b\\\" \\\"c\\\"}\"")
+  (println "Available functions with their parameters:\n")
   (doseq [f func-list]
      (println (str f " : " (get-args f))) 
      )

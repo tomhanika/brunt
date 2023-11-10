@@ -1,0 +1,2 @@
+conexp-clj simple
+{:context [#{"a" "b" "c"} #{"a" "b" "c"} #{["c" "a"] ["c" "b"] ["b" "c"] ["a" "c"] ["c" "c"] ["b" "b"]}]}
