@@ -8,28 +8,39 @@ The standalone jar (in builds/uberjar) can be used via:
 
     $ java -jar fca-clj-0.1.0-SNAPSHOT-standalone.jar [args]
 
-The arguments are:
+The following options may be used:
 
 ```
--f, --function FUNCTION  Function to be executed.
--i, --input FILE         Input file path (for context file).
--o, --output FILE        Output file path (for output of the fca analysis).
--h, --help
+-f, --function FUNCTION 	Specifies Function to be executed.
+-h, --help 			Displays Intruction Texts.
 ```
 
-## Options
+All supported Functions, as well as their necessary arguments can be displayed by executing:
 
-Supported functions are:
+    $ java -jar fca-clj-0.1.0-SNAPSHOT-standalone.jar -h
 
-- `draw-concept-lattice` - Draw the concept lattice of the context input using gui tool of conexp-clj. With this option, it is possible to manually edit and save the result.
-- `save-concept-lattice` - Save the concept lattice of the context input. The default layout is used.
-- `save-concept-lattice-dimdraw` - Save the concept lattice of the context input, using the dim-draw layout. This is only recommended for small contexts, as the computation of the dim-draw layout takes much time.
+The Arguments of a specific function can be display with:
 
-## Example
+    $ java -jar fca-clj-0.1.0-SNAPSHOT-standalone.jar -h [function]
+
+##Example
 
 There is an example context given in the testing-data folder. To save an image of a concept lattice in dim-draw layout, the following command can be used (directly from the fca-clj directory):
 
     $ java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f save-concept-lattice-dimdraw -i testing-data/living-beings-and-water.cxt -o test.png
+
+Note that the file path from the current directory needs to be specified to access the jar file.
+
+##Arguments
+
+Arguments such as sets need to be specified in string form, by encasing them in the " character.
+A set of integers my be input like this:
+
+   $"#{1 2 3}"
+
+In case strings are provided as entries to a set, they need to be encases as well. For this to be interpreted correctly, the inner " need to be escaped using the \ character:
+
+   $"#{\"a\" \"b\" \"c\"}"
 
 ## License
 
