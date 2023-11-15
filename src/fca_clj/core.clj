@@ -60,7 +60,7 @@
   "Displays Instruction Text. *func* may be nil"
   [func]
   (if func (let [args (get-args func)]
-              (if (.contains func-list func) 
+              (if args
                  (do
                     (println (str "The Function " func " requires the following arguments in order:"))
                     (doseq [arg args] (println arg)))

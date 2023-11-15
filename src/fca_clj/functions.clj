@@ -25,45 +25,6 @@
 ;;(explore-attributes :context ctx)
 ;;number-of-linear-extensions
 
-(def func-list ["save-random-context"
-                "objects"
-                "attributes"
-                "incidence"
-                "extents"
-                "intents"
-                "concepts"
-                "object-clarified?"
-                "attribute-clarified?"
-                "context-clarified?"
-                "clarify-objects"
-                "clarify-attributes"
-                "clarify-context"
-                "up-arrows"
-                "down-arrows"
-                "reduced?"
-                "reduce"
-                "object-derivation"
-                "attribute-derivation"
-                "object-clojure"
-                "attribute-clojure"
-                "dual"
-                "invert"
-                "apposition"
-                "subposition"
-                "composition"
-                "union"
-                "sum"
-                "intersection"
-                "product"
-                "semiproduct"
-                "xia-product"
-
-                
-                "draw-concept-lattice" 
-                "save-concept-lattice" 
-                "save-concept-lattice-dimdraw"
-                ])
-
 (defn get-args
   "Returns Parameter Explanation for Functions."
   [func]
