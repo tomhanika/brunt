@@ -36,11 +36,12 @@ Note that the file path from the current directory needs to be specified to acce
 Arguments such as sets need to be specified in string form, by encasing them in the " character.
 A set of integers my be input like this:
 
-   $ "#{1 2 3}"
+    $ "#{1 2 3}"
 
 In case strings are provided as entries to a set, they need to be encases as well. For this to be interpreted correctly, the inner " need to be escaped using the \ character:
 
-   $ "#{\"a\" \"b\" \"c\"}"
+    $ "#{\"a\" \"b\" \"c\"}"
+
 
 ## License
 
