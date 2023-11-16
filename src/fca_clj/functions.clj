@@ -3,6 +3,7 @@
             [clojure.tools.cli :refer [parse-opts]]
             [conexp.fca.contexts :refer :all]
             [conexp.fca.lattices :refer [concept-lattice]]
+            [conexp.fca.exploration :refer :all]
             [conexp.gui.draw :refer :all]
             [conexp.gui.draw.scenes :refer [save-image show-labels]]
             [conexp.io.contexts :refer [read-context write-context]]
@@ -26,6 +27,8 @@
 ;;number-of-linear-extensions
 
 (def func-list ["save-random-context"
+                "save-diag-context"
+                "save-adiag-context"
                 "objects"
                 "attributes"
                 "incidence"
@@ -57,11 +60,10 @@
                 "product"
                 "semiproduct"
                 "xia-product"
-
-
                 "draw-concept-lattice" 
                 "save-concept-lattice" 
                 "save-concept-lattice-dimdraw"
+                "explore-attributes"
                 ])
 
 (defn get-args
@@ -69,6 +71,8 @@
   [func]
   (case func  
   "save-random-context" ["Set of Objects" "Fill Rate" "Output File Path"]  
+  "save-diag-context" ["Size" "Output File Path"]
+  "save-adiag-context" ["Size" "Output File Path"]
   "objects" ["Context File Path"]
   "attributes" ["Context File Path"]
   "incidence" ["Context File Path"]
@@ -100,11 +104,10 @@
   "product" ["Context File Path" "Context File Path" "Output File Path"] 
   "semiproduct" ["Context File Path" "Context File Path" "Output File Path"] 
   "xia-product" ["Context File Path" "Context File Path" "Output File Path"] 
-
-
   "draw-concept-lattice" ["Context File Path"]
   "save-concept-lattice" ["Context File Path" "Output File Path"]
   "save-concept-lattice-dimdraw" ["Context File Path" "Output File Path"]
+  "explore-attributes" ["Context File Path"]
   nil))
 
 
@@ -115,6 +118,12 @@
 
     "save-random-context" (fn [objs fill-rate save-path]
                             (write-context :burmeister (rand-context (load-string objs) (load-string fill-rate)) save-path))
+
+    "save-diag-context" (fn [size save-path]
+                          (write-context :burmeister (diag-context (load-string size)) save-path))
+
+    "save-adiag-context" (fn [size save-path]
+                           (write-context :burmeister (adiag-context (load-string size)) save-path))
 
     "objects" (fn [ctx-path] (println (objects (read-context ctx-path))))
 
@@ -225,7 +234,10 @@
                                        (show-labels scene true)
                                        (Thread/sleep 1000) ;; make sure that the scene is fully drawn
                                        (save-image scene (io/as-file save-path) "png"))
-                                     (System/exit 0))                             
+                                     (System/exit 0))
+
+   "explore-attributes" (fn [ctx-path]
+                          (explore-attributes :context (read-context ctx-path)))                          
     nil))
 
 ;testing-data/living-beings-and-water.cxt
