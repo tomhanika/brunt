@@ -8,21 +8,6 @@
 ;; You must not remove this notice, or any other, from this software.
 
 
-;;Function todo:
-;;rand-ctx
-;;(objects ctx)
-;;(attributes ctx)
-;;(incidence ctx)
-;;(extents ctx)
-;;(intents ctx)
-;;(concepts)
-;;weitere Funktionen aus contexts
-;;canonical-base
-;;ganter-base
-;;save csv as context
-;;(explore-attributes :context ctx)
-;;number-of-linear-extensions
-
 (ns fca-clj.core
   (:require [clojure.java.io :as io]
             [clojure.tools.cli :refer [parse-opts]]
@@ -49,8 +34,8 @@
   (println "Sets can be entered as follows: \"#{1 2 3}\"")
   (println "Sets containing string values need to be entered as follows: \"#{\\\"a\\\" \\\"b\\\" \\\"c\\\"}\"")
   (println "Available functions with their parameters:\n")
-  (doseq [f func-list]
-     (println (str f " : " (get-args f))) 
+  (doseq [f (keys func-list)]
+     (println (str f " : " (func-list f))) 
      )
 )
 
@@ -59,7 +44,7 @@
 (defn- help 
   "Displays Instruction Text. *func* may be nil"
   [func]
-  (if func (let [args (get-args func)]
+  (if func (let [args (func-list func)]
               (if args
                  (do
                     (println (str "The Function " func " requires the following arguments in order:"))

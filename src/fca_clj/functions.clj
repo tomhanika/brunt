@@ -4,111 +4,59 @@
             [conexp.fca.contexts :refer :all]
             [conexp.fca.lattices :refer [concept-lattice]]
             [conexp.fca.exploration :refer :all]
+            [conexp.fca.pqcores :refer :all]
             [conexp.gui.draw :refer :all]
             [conexp.gui.draw.scenes :refer [save-image show-labels]]
             [conexp.io.contexts :refer [read-context write-context]]
             [conexp.layouts :refer [standard-layout]]
             [conexp.layouts.dim-draw :refer [dim-draw-layout]])
 (:gen-class))
+
+(def func-list
+  "Contains all Available Functions with Parameter Ecplanation."
  
-;;Function todo:
-;;rand-ctx
-;;(objects ctx)
-;;(attributes ctx)
-;;(incidence ctx)
-;;(extents ctx)
-;;(intents ctx)
-;;(concepts)
-;;weitere Funktionen aus contexts
-;;canonical-base
-;;ganter-base
-;;save csv as context
-;;(explore-attributes :context ctx)
-;;number-of-linear-extensions
-
-(def func-list ["save-random-context"
-                "save-diag-context"
-                "save-adiag-context"
-                "objects"
-                "attributes"
-                "incidence"
-                "extents"
-                "intents"
-                "concepts"
-                "object-clarified?"
-                "attribute-clarified?"
-                "context-clarified?"
-                "clarify-objects"
-                "clarify-attributes"
-                "clarify-context"
-                "up-arrows"
-                "down-arrows"
-                "reduced?"
-                "reduce"
-                "object-derivation"
-                "attribute-derivation"
-                "object-clojure"
-                "attribute-clojure"
-                "dual"
-                "invert"
-                "apposition"
-                "subposition"
-                "composition"
-                "union"
-                "sum"
-                "intersection"
-                "product"
-                "semiproduct"
-                "xia-product"
-                "draw-concept-lattice" 
-                "save-concept-lattice" 
-                "save-concept-lattice-dimdraw"
-                "explore-attributes"
-                ])
-
-(defn get-args
-  "Returns Parameter Explanation for Functions."
-  [func]
-  (case func  
-  "save-random-context" ["Set of Objects" "Fill Rate" "Output File Path"]  
-  "save-diag-context" ["Size" "Output File Path"]
-  "save-adiag-context" ["Size" "Output File Path"]
-  "objects" ["Context File Path"]
-  "attributes" ["Context File Path"]
-  "incidence" ["Context File Path"]
-  "extents" ["Context File Path"]
-  "intents" ["Context File Path"]
-  "concepts" ["Context File Path"]
-  "object-clarified?" ["Context File Path"]
-  "attribute-clarified?" ["Context File Path"]
-  "context-clarified" ["Context File Path"]
-  "clarify-objects" ["Context File Path" "Output File Path"]
-  "clarify-attributes" ["Context File Path" "Output File Path"]
-  "clarify-context" ["Context File Path" "Output File Path"]
-  "up-arrows" ["Context File Path"]
-  "down-arrows" ["Context File Path"]
-  "reduced?" ["Context File Path"]
-  "reduce" ["Context File Path" "Output File Path"]
-  "object-derivation" ["Context File Path" "Set of Objects"]
-  "attribute-derivation" ["Context File Path" "Set of Attributes"]
-  "object-clojure" ["Context File Path" "Set of Objects"]
-  "attribute-clojure" ["Context File Path" "Set of Attributes"]
-  "dual" ["Context File Path" "Output File Path"]
-  "invert" ["Context File Path" "Output File Path"]
-  "apposition" ["Context File Path" "Context File Path" "Output File Path"] 
-  "subposition" ["Context File Path" "Context File Path" "Output File Path"] 
-  "composition" ["Context File Path" "Context File Path" "Output File Path"] 
-  "union" ["Context File Path" "Context File Path" "Output File Path"] 
-  "sum" ["Context File Path" "Context File Path" "Output File Path"] 
-  "intersection" ["Context File Path" "Context File Path" "Output File Path"] 
-  "product" ["Context File Path" "Context File Path" "Output File Path"] 
-  "semiproduct" ["Context File Path" "Context File Path" "Output File Path"] 
-  "xia-product" ["Context File Path" "Context File Path" "Output File Path"] 
-  "draw-concept-lattice" ["Context File Path"]
-  "save-concept-lattice" ["Context File Path" "Output File Path"]
-  "save-concept-lattice-dimdraw" ["Context File Path" "Output File Path"]
-  "explore-attributes" ["Context File Path"]
-  nil))
+  (sorted-map "save-random-context" ["Set of Objects" "Fill Rate" "Output File Path"]  
+              "save-diag-context" ["Size" "Output File Path"]
+              "save-adiag-context" ["Size" "Output File Path"]
+              "objects" ["Context File Path"]
+              "attributes" ["Context File Path"]
+              "incidence" ["Context File Path"]
+              "extents" ["Context File Path"]
+              "intents" ["Context File Path"]
+              "concepts" ["Context File Path"]
+              "object-clarified?" ["Context File Path"]
+              "attribute-clarified?" ["Context File Path"]
+              "context-clarified" ["Context File Path"]
+              "clarify-objects" ["Context File Path" "Output File Path"]
+              "clarify-attributes" ["Context File Path" "Output File Path"]
+              "clarify-context" ["Context File Path" "Output File Path"]
+              "up-arrows" ["Context File Path"]
+              "down-arrows" ["Context File Path"]
+              "reduced?" ["Context File Path"]
+              "reduce" ["Context File Path" "Output File Path"]
+              "object-derivation" ["Context File Path" "Set of Objects"]
+              "attribute-derivation" ["Context File Path" "Set of Attributes"]
+              "object-clojure" ["Context File Path" "Set of Objects"]
+              "attribute-clojure" ["Context File Path" "Set of Attributes"]
+              "dual" ["Context File Path" "Output File Path"]
+              "invert" ["Context File Path" "Output File Path"]
+              "apposition" ["Context File Path" "Context File Path" "Output File Path"] 
+              "subposition" ["Context File Path" "Context File Path" "Output File Path"] 
+              "composition" ["Context File Path" "Context File Path" "Output File Path"] 
+              "union" ["Context File Path" "Context File Path" "Output File Path"] 
+              "sum" ["Context File Path" "Context File Path" "Output File Path"] 
+              "intersection" ["Context File Path" "Context File Path" "Output File Path"] 
+              "product" ["Context File Path" "Context File Path" "Output File Path"] 
+              "semiproduct" ["Context File Path" "Context File Path" "Output File Path"] 
+              "xia-product" ["Context File Path" "Context File Path" "Output File Path"] 
+              "draw-concept-lattice" ["Context File Path"]
+              "save-concept-lattice" ["Context File Path" "Output File Path"]
+              "save-concept-lattice-dimdraw" ["Context File Path" "Output File Path"]
+              "explore-attributes" ["Context File Path"]
+              "compute-core" ["Context File Path" "P" "Q"]
+              "ctx-core-size" ["Context File Path"]
+              "core-lattice-sizes" ["Context File Path"]
+              "large-ctx-lattice-sizes-partial" ["Context File Path" "Maximum Lattice Size"]))
 
 
 (defn get-function
@@ -237,7 +185,19 @@
                                      (System/exit 0))
 
    "explore-attributes" (fn [ctx-path]
-                          (explore-attributes :context (read-context ctx-path)))                          
+                          (explore-attributes :context (read-context ctx-path)))    
+
+   "compute-core" (fn [ctx-path p q]
+                    (println (compute-core (read-context ctx-path) (load-string p) (load-string q))))
+
+   "ctx-core-sizes" (fn [ctx-path]
+                      (println (ctx-core-sizes (read-context ctx-path))))
+
+   "core-lattice-sizes" (fn [ctx-path]
+                          (println (core-lattice-sizes (read-context ctx-path))))
+
+   "large-ctx-lattice-sizes-partial" (fn [ctx-path size]
+                                       (println (large-ctx-lattice-sizes-partial (read-context ctx-path) (load-string size))))
     nil))
 
 ;testing-data/living-beings-and-water.cxt
