@@ -3,11 +3,15 @@
             [clojure.tools.cli :refer [parse-opts]]
             [conexp.fca.contexts :refer :all]
             [conexp.fca.lattices :refer [concept-lattice]]
+            [conexp.fca.implications :refer :all]
             [conexp.fca.exploration :refer :all]
             [conexp.fca.pqcores :refer :all]
+            [conexp.math.sampling :refer [minimals-plus]]
             [conexp.gui.draw :refer :all]
             [conexp.gui.draw.scenes :refer [save-image show-labels]]
             [conexp.io.contexts :refer [read-context write-context]]
+            [conexp.io.lattices :refer [read-lattice write-lattice]]
+            [conexp.io.implications :refer [read-implication write-implication]]
             [conexp.layouts :refer [standard-layout]]
             [conexp.layouts.dim-draw :refer [dim-draw-layout]])
 (:gen-class))
@@ -50,8 +54,9 @@
               "semiproduct" ["Context File Path" "Context File Path" "Output File Path"] 
               "xia-product" ["Context File Path" "Context File Path" "Output File Path"] 
               "draw-concept-lattice" ["Context File Path"]
-              "save-concept-lattice" ["Context File Path" "Output File Path"]
-              "save-concept-lattice-dimdraw" ["Context File Path" "Output File Path"]
+              "minimals-plus" ["Lattice File Path" "Number of Samples"]
+              "concept-lattice" ["Context File Path" "Output File Path"]
+              "save-implication" ["Premise" "Conclusion" "Output File Path"]
               "explore-attributes" ["Context File Path"]
               "compute-core" ["Context File Path" "P" "Q"]
               "ctx-core-size" ["Context File Path"]
@@ -158,46 +163,30 @@
     "draw-concept-lattice" (fn [ctx-path] 
                              (draw-concept-lattice (read-context ctx-path)))
 
-    "save-concept-lattice" (fn [ctx-path save-path] 
-                             (let [ctx (read-context ctx-path)
-                                   concept-lattice (concept-lattice ctx)
-                                   layout (standard-layout concept-lattice)
-                                   frame-and-scene (draw-layout layout 
-                                                                :visible true
-                                                                :dimension [1000 1000])
-                                   scene (:scene frame-and-scene)]
-                               (show-labels scene true)
-                               (Thread/sleep 1000) ;; make sure that the scene is fully drawn
-                               (save-image scene (io/as-file save-path) "png"))
-                             (System/exit 0))
+    "concept-lattice" (fn [ctx-path save-path]
+                        (write-lattice (concept-lattice (read-context ctx-path)) save-path))
 
-    "save-concept-lattice-dimdraw" (fn [ctx-path save-path] 
-                                     (let [ctx (read-context ctx-path)
-                                           concept-lattice (concept-lattice ctx)
-                                           layout (dim-draw-layout concept-lattice)
-                                           frame-and-scene (draw-layout layout 
-                                                                        :visible true
-                                                                        :dimension [1000 1000])
-                                           scene (:scene frame-and-scene)]
-                                       (show-labels scene true)
-                                       (Thread/sleep 1000) ;; make sure that the scene is fully drawn
-                                       (save-image scene (io/as-file save-path) "png"))
-                                     (System/exit 0))
+    "minimals-plus" (fn [lat-path samples]
+                      (println (minimals-plus (read-lattice lat-path) (load-string samples))))
 
-   "explore-attributes" (fn [ctx-path]
-                          (explore-attributes :context (read-context ctx-path)))    
+    "save-implication" (fn [premise conclusion save-path]
+                         (write-implication (make-implication (load-string premise) (load-string conclusion)) save-path))
 
-   "compute-core" (fn [ctx-path p q]
-                    (println (compute-core (read-context ctx-path) (load-string p) (load-string q))))
 
-   "ctx-core-sizes" (fn [ctx-path]
-                      (println (ctx-core-sizes (read-context ctx-path))))
+    "explore-attributes" (fn [ctx-path]
+                           (explore-attributes :context (read-context ctx-path)))    
 
-   "core-lattice-sizes" (fn [ctx-path]
-                          (println (core-lattice-sizes (read-context ctx-path))))
+    "compute-core" (fn [ctx-path p q]
+                     (println (compute-core (read-context ctx-path) (load-string p) (load-string q))))
 
-   "large-ctx-lattice-sizes-partial" (fn [ctx-path size]
-                                       (println (large-ctx-lattice-sizes-partial (read-context ctx-path) (load-string size))))
+    "ctx-core-sizes" (fn [ctx-path]
+                       (println (ctx-core-sizes (read-context ctx-path))))
+
+    "core-lattice-sizes" (fn [ctx-path]
+                           (println (core-lattice-sizes (read-context ctx-path))))
+
+    "large-ctx-lattice-sizes-partial" (fn [ctx-path size]
+                                        (println (large-ctx-lattice-sizes-partial (read-context ctx-path) (load-string size))))
     nil))
 
 ;testing-data/living-beings-and-water.cxt
