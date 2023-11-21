@@ -40,7 +40,6 @@
 )
 
 
-
 (defn- help 
   "Displays Instruction Text. *func* may be nil"
   [func]

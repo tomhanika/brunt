@@ -11,7 +11,7 @@
             [conexp.gui.draw.scenes :refer [save-image show-labels]]
             [conexp.io.contexts :refer [read-context write-context]]
             [conexp.io.lattices :refer [read-lattice write-lattice]]
-            [conexp.io.implications :refer [read-implication write-implication implication->json]]
+            [conexp.io.implications :refer [read-implication write-implication]]
             [conexp.layouts :refer [standard-layout]]
             [conexp.layouts.dim-draw :refer [dim-draw-layout]])
 (:gen-class))
@@ -56,7 +56,9 @@
               "draw-concept-lattice" ["Context File Path"]
               "minimals-plus" ["Lattice File Path" "Number of Samples"]
               "concept-lattice" ["Context File Path" "Output File Path"]
-              "save-implication" ["Premise" "Conclusion" "Output File Path"]
+              "close-under-implications" ["Implications File Path" "Starting Set"]
+              "canonical-base" ["Context File Path" "Output File Path"]
+              "luxenburger-basis" ["Context File Path" "Output File Path" "Minimum Support" "Minimum Confidence"]
               "explore-attributes" ["Context File Path"]
               "compute-core" ["Context File Path" "P" "Q"]
               "ctx-core-size" ["Context File Path"]
@@ -169,9 +171,14 @@
     "minimals-plus" (fn [lat-path samples]
                       (println (minimals-plus (read-lattice lat-path) (load-string samples))))
 
-    "save-implication" (fn [premise conclusion save-path]
-                         (write-implication (make-implication (load-string premise) (load-string conclusion)) save-path))
+    "close-under-implications" (fn [impl-path start]
+                                 (println (close-under-implications (read-implication impl-path) (load-string start))))
 
+    "canonical-base" (fn [ctx-path save-path]
+                       (write-implication (canonical-base (read-context ctx-path)) save-path))
+
+    "luxenburger-base" (fn [ctx-path save-path supp conf]
+                         (write-implication (luxenburger-base (read-context ctx-path) (load-string supp) (load-string conf)) save-path))
 
     "explore-attributes" (fn [ctx-path]
                            (explore-attributes :context (read-context ctx-path)))    
@@ -189,5 +196,3 @@
                                         (println (large-ctx-lattice-sizes-partial (read-context ctx-path) (load-string size))))
     nil))
 
-;testing-data/living-beings-and-water.cxt
-;test.png
