@@ -32,7 +32,7 @@
   (println "Enter -h for help.")
   (println "Use -f to enter a function followed by its parameters.\n")
   (println "Sets can be entered as follows: \"#{1 2 3}\"")
-  (println "Sets containing string values need to be entered as follows: \"#{\\\"a\\\" \\\"b\\\" \\\"c\\\"}\"")
+  (println "Sets containing string values need to be entered as follows: \"#{'a' 'b' 'c'}\"")
   (println "Available functions with their parameters:\n")
   (doseq [f (keys func-list)]
      (println (str f " : " (func-list f))) 

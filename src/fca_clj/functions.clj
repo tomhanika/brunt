@@ -11,7 +11,7 @@
             [conexp.gui.draw.scenes :refer [save-image show-labels]]
             [conexp.io.contexts :refer [read-context write-context]]
             [conexp.io.lattices :refer [read-lattice write-lattice]]
-            [conexp.io.implications :refer [read-implication write-implication]]
+            [conexp.io.implications :refer [read-implication write-implication implication->json]]
             [conexp.layouts :refer [standard-layout]]
             [conexp.layouts.dim-draw :refer [dim-draw-layout]])
 (:gen-class))
