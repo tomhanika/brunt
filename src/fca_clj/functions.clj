@@ -52,10 +52,11 @@
               "intersection" ["Context File Path" "Context File Path" "Output File Path"] 
               "product" ["Context File Path" "Context File Path" "Output File Path"] 
               "semiproduct" ["Context File Path" "Context File Path" "Output File Path"] 
-              "xia-product" ["Context File Path" "Context File Path" "Output File Path"] 
-              "draw-concept-lattice" ["Context File Path"]
-              "minimals-plus" ["Lattice File Path" "Number of Samples"]
               "concept-lattice" ["Context File Path" "Output File Path"]
+              "xia-product" ["Context File Path" "Context File Path" "Output File Path"] 
+              "draw-context-lattice" ["Context File Path"]
+
+              "minimals-plus" ["Lattice File Path" "Number of Samples"]
               "close-under-implications" ["Implications File Path" "Starting Set"]
               "canonical-base" ["Context File Path" "Output File Path"]
               "luxenburger-basis" ["Context File Path" "Output File Path" "Minimum Support" "Minimum Confidence"]
@@ -162,8 +163,11 @@
                    (write-context :burmeister (context-xia-product (read-context ctx-path) (read-context ctx-path2)) save-path))
 
 
-    "draw-concept-lattice" (fn [ctx-path] 
+    "draw-context-lattice" (fn [ctx-path] 
                              (draw-concept-lattice (read-context ctx-path)))
+
+    "draw-lattice" (fn [lat-path] 
+                     (draw-lattice (read-lattice lat-path)))
 
     "concept-lattice" (fn [ctx-path save-path]
                         (write-lattice (concept-lattice (read-context ctx-path)) save-path))
