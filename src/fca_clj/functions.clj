@@ -55,12 +55,12 @@
               "concept-lattice" ["Context File Path" "Output File Path"]
               "xia-product" ["Context File Path" "Context File Path" "Output File Path"] 
               "draw-context-lattice" ["Context File Path"]
-
               "minimals-plus" ["Lattice File Path" "Number of Samples"]
               "close-under-implications" ["Implications File Path" "Starting Set"]
               "canonical-base" ["Context File Path" "Output File Path"]
-              "luxenburger-basis" ["Context File Path" "Output File Path" "Minimum Support" "Minimum Confidence"]
+              "luxenburger-base" ["Context File Path" "Output File Path" "Minimum Support" "Minimum Confidence"]
               "explore-attributes" ["Context File Path"]
+              "equivalent-implications?" ["Implications File Path" "Implications File Path"]
               "compute-core" ["Context File Path" "P" "Q"]
               "ctx-core-size" ["Context File Path"]
               "core-lattice-sizes" ["Context File Path"]
@@ -185,7 +185,10 @@
                          (write-implication (luxenburger-base (read-context ctx-path) (load-string supp) (load-string conf)) save-path))
 
     "explore-attributes" (fn [ctx-path]
-                           (explore-attributes :context (read-context ctx-path)))    
+                           (println (explore-attributes :context (read-context ctx-path))))
+
+    "equivalent-implications?" ( fn [impl-path impl-path2]
+                                (println (equivalent-implications? (read-implication impl-path) (read-implication impl-path2))))  
 
     "compute-core" (fn [ctx-path p q]
                      (println (compute-core (read-context ctx-path) (load-string p) (load-string q))))
