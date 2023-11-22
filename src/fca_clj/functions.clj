@@ -40,8 +40,8 @@
               "reduce" ["Context File Path" "Output File Path"]
               "object-derivation" ["Context File Path" "Set of Objects"]
               "attribute-derivation" ["Context File Path" "Set of Attributes"]
-              "object-clojure" ["Context File Path" "Set of Objects"]
-              "attribute-clojure" ["Context File Path" "Set of Attributes"]
+              "object-closure" ["Context File Path" "Set of Objects"]
+              "attribute-closure" ["Context File Path" "Set of Attributes"]
               "dual" ["Context File Path" "Output File Path"]
               "invert" ["Context File Path" "Output File Path"]
               "apposition" ["Context File Path" "Context File Path" "Output File Path"] 
@@ -122,10 +122,10 @@
     "attribute-derivation" (fn [ctx-path attrs]
                           (println (attribute-derivation (read-context ctx-path) (load-string attrs))))
 
-    "object-clojure" (fn [ctx-path objs]
+    "object-closure" (fn [ctx-path objs]
                           (println (context-object-closure (read-context ctx-path) (load-string objs))))
 
-    "attribute-clojure" (fn [ctx-path attrs]
+    "attribute-closure" (fn [ctx-path attrs]
                           (println (context-attribute-closure (read-context ctx-path) (load-string attrs))))
 
     "dual" (fn [ctx-path save-path]
