@@ -10,7 +10,7 @@ render it, and perform some operations on it.
 ** Computing Formal Concepts
 
 
-To compute the concept of a formal context, the ~concepts~ function is available:
+To compute the concepts of a formal context, the ~concepts~ function is available:
 
 #+begin_src clojure :exports both
 java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f concepts testing-data/bodiesofwater.ctx
@@ -46,7 +46,7 @@ java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f draw-lattice l
 
 [[./images/lattice.png]]
 
-Alternatively, the lattice can be drawn from the contxt directly:
+Alternatively, the lattice can be drawn from the context directly:
 
 #+begin_src clojure :exports both
 java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f draw-context-lattice testing-data/bodiesofwater.ctx

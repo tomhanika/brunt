@@ -30,7 +30,7 @@
               "concepts" ["Context File Path"]
               "object-clarified?" ["Context File Path"]
               "attribute-clarified?" ["Context File Path"]
-              "context-clarified" ["Context File Path"]
+              "context-clarified?" ["Context File Path"]
               "clarify-objects" ["Context File Path" "Output File Path"]
               "clarify-attributes" ["Context File Path" "Output File Path"]
               "clarify-context" ["Context File Path" "Output File Path"]
@@ -54,7 +54,7 @@
               "semiproduct" ["Context File Path" "Context File Path" "Output File Path"] 
               "concept-lattice" ["Context File Path" "Output File Path"]
               "xia-product" ["Context File Path" "Context File Path" "Output File Path"] 
-              "draw-context-lattice" ["Context File Path"]
+              "draw-concept-lattice" ["Context File Path"]
               "minimals-plus" ["Lattice File Path" "Number of Samples"]
               "close-under-implications" ["Implications File Path" "Starting Set"]
               "canonical-base" ["Context File Path" "Output File Path"]
@@ -62,7 +62,7 @@
               "explore-attributes" ["Context File Path"]
               "equivalent-implications?" ["Implications File Path" "Implications File Path"]
               "compute-core" ["Context File Path" "P" "Q"]
-              "ctx-core-size" ["Context File Path"]
+              "ctx-core-sizes" ["Context File Path"]
               "core-lattice-sizes" ["Context File Path"]
               "large-ctx-lattice-sizes-partial" ["Context File Path" "Maximum Lattice Size"]))
 
@@ -163,7 +163,7 @@
                    (write-context :burmeister (context-xia-product (read-context ctx-path) (read-context ctx-path2)) save-path))
 
 
-    "draw-context-lattice" (fn [ctx-path] 
+    "draw-concept-lattice" (fn [ctx-path] 
                              (draw-concept-lattice (read-context ctx-path)))
 
     "draw-lattice" (fn [lat-path] 
