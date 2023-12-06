@@ -1,0 +1,52 @@
+#+property: header-args :wrap src text
+#+property: header-args:text :eval never
+
+* Working with Implications
+
+
+Implications are a fundamental means to express dependencies between attributes within
+formal contexts. A set of implications can be obtained by computing a base from a context, or by saving it manually.
+
+The canonical base of a formal context can be computed like this:
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f canonical-base testing-data/bodiesofwater.ctx cbase.json
+#+end_src
+
+This command will save he following base:
+
+#+RESULTS:
+#+begin_src text
+((#{"maritime"} ⟶  #{"constant" "natural" "stagnant"})
+ (#{"running"} ⟶  #{"constant"})
+ (#{"running" "constant" "stagnant"} ⟶  #{"maritime" "natural"}))
+#+end_src
+
+The luxenburger base can be computed as well. The minimum support and minimum confidence need to additionally be specified:
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f luxenburger-base testing-data/bodiesofwater.ctx lbase.json 0.2 0.8
+#+end_src
+
+#+RESULTS:
+#+begin_src text
+((#{} ⟶  #{"natural"})
+ (#{"stagnant"} ⟶  #{"natural"})
+ (#{} ⟶  #{"constant"})
+ (#{"stagnant"} ⟶  #{"constant"})
+ (#{"natural"} ⟶  #{"constant"})
+ (#{"constant"} ⟶  #{"natural"})
+ (#{"natural" "stagnant"} ⟶  #{"constant"})
+ (#{"constant" "stagnant"} ⟶  #{"natural"}))
+#+end_src
+
+The method ~close-under-implications~ computes the inclusion-minimal set of a given set of objects which respects all given implications.
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f close-under-implications cbase.json "#{\"natural\"}"
+#+end_src
+
+#+RESULTS:
+#+begin_src text
+#{constant natural}
+#+end_src

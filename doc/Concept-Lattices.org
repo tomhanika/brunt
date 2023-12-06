@@ -1,0 +1,78 @@
+#+property: header-args :wrap src text
+#+property: header-args:text :eval never
+
+* Concept Lattices in ~fca-clj~
+
+~fca-clj~ provides functionality to compute the concept lattice of a formal context,
+render it, and perform some operations on it.
+
+
+** Computing Formal Concepts
+
+
+To compute the concept of a formal context, the ~concepts~ function is available:
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f concepts testing-data/bodiesofwater.ctx
+#+end_src
+
+#+RESULTS:
+#+begin_src clojure
+([#{river stream reservoir puddle sea lagoon rivulet maar pond runnel tarn canal pool trickle channel lake torrent} #{}] 
+[#{river stream rivulet runnel canal trickle channel torrent} #{running constant}] 
+[#{} #{running maritime constant natural stagnant}] 
+[#{river stream rivulet runnel trickle torrent} #{running constant natural}] 
+[#{sea lagoon} #{maritime constant natural stagnant}] 
+[#{river stream reservoir sea lagoon rivulet maar pond runnel tarn canal pool trickle channel lake torrent} #{constant}] 
+[#{river stream sea lagoon rivulet maar pond runnel tarn pool trickle lake torrent} #{constant natural}] 
+[#{sea lagoon maar pond tarn pool lake} #{constant natural stagnant}] 
+[#{reservoir sea lagoon maar pond tarn pool lake} #{constant stagnant}] 
+[#{river stream puddle sea lagoon rivulet maar pond runnel tarn pool trickle lake torrent} #{natural}] 
+[#{puddle sea lagoon maar pond tarn pool lake} #{natural stagnant}] 
+[#{reservoir puddle sea lagoon maar pond tarn pool lake} #{stagnant}])
+#+end_src
+
+To save the corresponding concept lattice, call the ~concept-lattice~ function:
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f concept-lattice testing-data/bodiesofwater.ctx lattice.json
+#+end_src
+
+This lattice can be drawn using the ~draw-context-lattice~ method:
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f draw-lattice lattice.json
+#+end_src
+
+[[./images/lattice.png]]
+
+Alternatively, the lattice can be drawn from the contxt directly:
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f draw-context-lattice testing-data/bodiesofwater.ctx
+#+end_src
+
+** Linear extensions
+
+A linear extension of a concept lattice is linear order of all elements such that the partial order of the lattice is not violated. Each lattice has at least one linear extension. 
+The function ~minimals-plus~ allows to sample from the set of all linear extensions given the concept lattice and the number of samples.
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f minimals-plus lattice.json 1
+#+end_src
+
+#+RESULTS:
+#+begin_src clojure
+([[#{} #{running maritime constant natural stagnant}] 
+[#{river stream rivulet runnel trickle torrent} #{running constant natural}] 
+[#{sea lagoon} #{maritime constant natural stagnant}] 
+[#{river stream rivulet runnel canal trickle channel torrent} #{running constant}] 
+[#{sea lagoon maar pond tarn pool lake} #{constant natural stagnant}] 
+[#{puddle sea lagoon maar pond tarn pool lake} #{natural stagnant}] 
+[#{river stream sea lagoon rivulet maar pond runnel tarn pool trickle lake torrent} #{constant natural}] 
+[#{reservoir sea lagoon maar pond tarn pool lake} #{constant stagnant}] 
+[#{river stream puddle sea lagoon rivulet maar pond runnel tarn pool trickle lake torrent} #{natural}] 
+[#{reservoir puddle sea lagoon maar pond tarn pool lake} #{stagnant}] 
+[#{river stream reservoir sea lagoon rivulet maar pond runnel tarn canal pool trickle channel lake torrent} #{constant}] 
+[#{river stream reservoir puddle sea lagoon rivulet maar pond runnel tarn canal pool trickle channel lake torrent} #{}]])
+#+end_src

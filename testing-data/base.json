@@ -1,0 +1,1 @@
+{"implications":[{"premise":[2,5],"conclusion":[1]},{"premise":[3],"conclusion":[4,2]},{"premise":[4,5],"conclusion":[1]},{"premise":[1],"conclusion":[5]},{"premise":[1,4,2,5],"conclusion":[3]}]}

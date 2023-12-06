@@ -1,0 +1,58 @@
+#+property: header-args :wrap src text
+#+property: header-args:text :eval never
+
+* Attribute Exploration
+
+We want to describe the facilities ~conexp-clj~ is offering for attribute
+exploration.  
+
+we will use the context ~explore.cxt~ as an example:
+
+#+RESULTS:
+#+begin_src text
+  |1 2 3 
+--+------
+a |. x . 
+b |x x . 
+c |x . x 
+
+#+end_src
+
+To explore the attributes of a context without any other features, call
+~explore-attributes~ with the corresponding context as its only argument.
+
+#+begin_src clojure :eval never
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f explore-attributes testing-data/explore.ctx
+#+end_src
+
+Exploration now proceeds as follows:
+
+#+begin_src text
+Does the implication (#{3} ==> #{1}) hold? no
+counterexample> object
+Please enter new object: d
+counterexample> attributes
+Please enter the attributes the new object should have: 3
+counterexample> q
+Do you want to give another counterexample? no
+Does the implication (#{2 3} ==> #{1}) hold? yes
+{:implications #{(#{2 3} ==> #{1})},
+ :context
+   |1 2 3
+ --+------
+ a |. x .
+ b |x x .
+ c |x . x
+ d |. . x
+}
+user=>
+#+end_src
+
+The result returned by ~explore-attributes~ is a hash-map with the implications
+found, together with the resulting context.
+
+To check whether two sets of implications are equivalent, run ~equivalent-implications?~.
+
+#+begin_src clojure :eval never
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f equivalent-implications? impl1.json impl2.json
+#+end_src

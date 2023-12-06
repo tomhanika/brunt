@@ -1,3 +1,4 @@
+
 ;; Copyright ⓒ the conexp-clj developers; all rights reserved.
 ;; The use and distribution terms for this software are covered by the
 ;; Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
@@ -5,6 +6,7 @@
 ;; By using this software in any fashion, you are agreeing to be bound by
 ;; the terms of this license.
 ;; You must not remove this notice, or any other, from this software.
+
 
 (ns fca-clj.core
   (:require [clojure.java.io :as io]
@@ -14,45 +16,44 @@
             [conexp.gui.draw.scenes :refer [save-image show-labels]]
             [conexp.io.contexts :refer [read-context]]
             [conexp.layouts :refer [standard-layout]]
-            [conexp.layouts.dim-draw :refer [dim-draw-layout]])
+            [conexp.layouts.dim-draw :refer [dim-draw-layout]]
+            [fca-clj.functions :refer :all])
   (:gen-class))
 
 (def cli-options
   "Command line options for fca-clj."
   [["-f" "--function FUNCTION" "Function to be executed."]
-   ["-i" "--input FILE" "Input file path (for context file)."]
-   ["-o" "--output FILE" "Output file path (for output of the fca analysis)."]
    ["-h" "--help"]])
 
-(defn- get-function
-  "Convert function string to function."
-  [options]
-  (case (:function options)
-    "draw-concept-lattice" (fn [context] 
-                             (draw-concept-lattice context))
-    "save-concept-lattice" (fn [context] 
-                             (let [concept-lattice (concept-lattice context)
-                                   layout (standard-layout concept-lattice)
-                                   frame-and-scene (draw-layout layout 
-                                                                :visible true
-                                                                :dimension [1000 1000])
-                                   scene (:scene frame-and-scene)]
-                               (show-labels scene true)
-                               (Thread/sleep 1000) ;; make sure that the scene is fully drawn
-                               (save-image scene (io/as-file (:output options)) "png"))
-                             (System/exit 0))
-    "save-concept-lattice-dimdraw" (fn [context] 
-                                     (let [concept-lattice (concept-lattice context)
-                                           layout (dim-draw-layout concept-lattice)
-                                           frame-and-scene (draw-layout layout 
-                                                                        :visible true
-                                                                        :dimension [1000 1000])
-                                           scene (:scene frame-and-scene)]
-                                       (show-labels scene true)
-                                       (Thread/sleep 1000) ;; make sure that the scene is fully drawn
-                                       (save-image scene (io/as-file (:output options)) "png"))
-                                     (System/exit 0))
-    nil))
+
+
+(defn- display-help
+  []
+  (println "Enter -h for help.")
+  (println "Use -f to enter a function followed by its parameters.\n")
+  (println "Sets can be entered as follows: \"#{1 2 3}\"")
+  (println "Sets containing string values need to be entered as follows: \"#{\\\"a\\\" \\\"b\\\" \\\"c\\\"}\"")
+  (println "Available functions with their parameters:\n")
+  (doseq [f (keys func-list)]
+     (println (str f " : " (func-list f))) 
+     )
+)
+
+
+(defn- help 
+  "Displays Instruction Text. *func* may be nil"
+  [func]
+  (if func (let [args (func-list func)]
+              (if args
+                 (do
+                    (println (str "The Function " func " requires the following arguments in order:"))
+                    (doseq [arg args] (println arg)))
+
+                  (do 
+                     (println "The Function " func " is not recognized. The following Functions are supported:")
+                     (doseq [f func-list] (println f)))))
+
+            (display-help)))
 
 (defn -main [& args]
   (let [{:keys [options arguments summary errors]} (parse-opts args cli-options)]
@@ -66,15 +67,14 @@
     (cond
       ;; Print help if requested
       (contains? options :help)
-      (println summary)
-      
+         (help (:function options))
       :else
       (do
-        (assert (:function options) "Function (-f, --function) must be specified.")
-        (assert (:input options) "Input file (-i, --input) must be specified.")
-        (assert (:output options) "Output file (-o, --output) must be specified.")
         
-        (let [context (read-context (:input options))
-              function (get-function options)]
-          (assert function (str "The function " (:function options) " is not supported."))
-          (function context))))))
+        (let [func-str (:function options)
+              func (get-function func-str)] 
+
+          (assert func-str "Function (-f, --function) must be specified.")       
+          (assert func (str "The function " func-str " is not supported."))
+          (apply func arguments)
+          )))))

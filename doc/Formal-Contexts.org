@@ -1,0 +1,182 @@
+#+property: header-args :wrap src text
+#+property: header-args:text :eval never
+
+* Working with Formal Contexts
+
+Most Functions supported by ~fca-clj~ operate on formal contexts.
+
+** Creating new Formal Contexts
+
+~fca-clj~ lets you easily create formal contexts in a number of ways.  We
+shall describe some of them in the following.
+
+There are a number of functions that allow for the quick creation of new contexts.
+
+Creating a diagonal context of size 4:
+#+begin_src clojure :results silent
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f save-diag-context 4 diag.ctx
+#+end_src
+
+Creating a random context on a specified set of objects and a fill rate of 0.5:
+#+begin_src clojure :results silent
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f save-random-context "#{1 2 3}" 0.5 rand.ctx
+#+end_src
+
+Alternatively, a context may be specified in the formal context file format used by ~conexp-clj~. Functions requiring a context as an input, requires such a file as an argument.
+
+
+
+** Working with Formal Contexts
+
+*** Basic Accessors
+
+The most basic operation on formal contexts is to retrieve its components.
+We will use the context ~bodiesofwater.ctx~, wich is supplied with the project by default.
+
+#+begin_src text
+          |constant maritime natural running stagnant 
+----------+-------------------------------------------
+canal     |x        .        .       x       .        
+channel   |x        .        .       x       .        
+lagoon    |x        x        x       .       x        
+lake      |x        .        x       .       x        
+maar      |x        .        x       .       x        
+pond      |x        .        x       .       x        
+pool      |x        .        x       .       x        
+puddle    |.        .        x       .       x        
+reservoir |x        .        .       .       x        
+river     |x        .        x       x       .        
+rivulet   |x        .        x       x       .        
+runnel    |x        .        x       x       .        
+sea       |x        x        x       .       x        
+stream    |x        .        x       x       .        
+tarn      |x        .        x       .       x        
+torrent   |x        .        x       x       .        
+trickle   |x        .        x       x       . 
+#+end_src
+
+The ~objects~, ~attributes~ and ~incidence~ can be retrieved by running the following commands:
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f objects testing-data/bodiesofwater.ctx
+#+end_src
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f attributes testing-data/bodiesofwater.ctx
+#+end_src
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f incidence testing-data/bodiesofwater.ctx
+#+end_src
+
+Computing ~extents~, ~intents~ and ~concepts~ of a context works analogously.
+
+
+*** Clarifying and Reducing Contexts
+
+To see if ~bodiesofwater.ctx~ is clarified, you can use the functions ~object-clarified?~,
+~attribute-clarified?~, and ~context-clarified?~, wich all require the same arguments.
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f object-clarified? testing-data/bodiesofwater.ctx
+#+end_src
+
+#+RESULTS:
+#+begin_src text
+false
+#+end_src
+
+The functions ~clarify-objects~, ~clarify-attributes~ and ~clarify-context~ can be used to save a new version of the context, with its objects, attributes or both clarified.
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f clarify-objects testing-data/bodiesofwater.ctx bow-obj-cl.ctx
+#+end_src
+
+The resulting context file will contain this context:
+#+begin_src text
+          |constant maritime natural running stagnant 
+----------+-------------------------------------------
+canal     |x        .        .       x       .        
+maar      |x        .        x       .       x        
+puddle    |.        .        x       .       x        
+reservoir |x        .        .       .       x        
+river     |x        .        x       x       .        
+sea       |x        x        x       .       x        
+#+end_src
+
+
+The arrow relations can also be computed, to verify wich objects and attributes are irreducible:
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f up-arrows testing-data/bodiesofwater.ctx
+#+end_src
+
+#+begin_src text
+#{[canal natural] [river stagnant] [stream stagnant] [trickle stagnant] [canal stagnant] [runnel stagnant] [sea running] [tarn running] 
+[maar maritime] [torrent stagnant] [channel natural] [rivulet stagnant] [reservoir natural] [pool maritime] [pond maritime] [lagoon running] 
+[tarn maritime] [lake running] [lake maritime] [maar running] [reservoir running] [channel stagnant] [pond running] [pool running] [puddle constant]}
+#+end_src
+
+The function ~down-arrows~ works analogously.
+
+To directly see whether ~bodiesofwater.ctx~ is reduced, use ~context-reduced?~, and to
+obtain a reduced version call ~reduce-context~ like so:
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f reduced? testing-data/bodiesofwater.ctx
+#+end_src
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f reduce testing-data/bodiesofwater.ctx bow-red.ctx
+#+end_src
+
+Be aware, that the ~reduce~ function may have a very long run time on larger contexts.
+
+
+*** Derivation Operations
+
+To retrieve all attributes, which objects ~pool~ and ~pond~ have in common, the function ~object-derivation~ may be used:
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f object-derivation testing-data/bodiesofwater.ctx "#{\"pond\" \"pool\"}"
+#+end_src
+
+#+begin_src text
+#{constant natural stagnant}
+#+end_src
+
+The inverse may be done using the ~attribute-derivation~ method:
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f attribute-derivation testing-data/bodiesofwater.ctx "#{\"constant\" \"natural\"  \"stagnant\"}"
+#+end_src
+
+#+begin_src text
+#{sea lagoon maar pond tarn pool lake}
+#+end_src
+
+To compute the closure of a given set of objects or attributes in our context use ~object-closure~ or ~attribute-closure~:
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f attribute-closure testing-data/bodiesofwater.ctx "#{\"constant\" \"natural\"}"
+#+end_src
+
+
+*** Further Operations on Contexts
+
+
+There a several further operations you can do with contexts, e.g., the context
+apposition, context subposition, and more.
+
+The ~dual~ and ~invert~ functions follow this pattern.
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f dual testing-data/bodiesofwater.ctx dual.ctx
+#+end_src
+
+Operations on two contexts can be performed like this:
+
+#+begin_src clojure :exports both
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f union testing-data/bodiesofwater.ctx testing-data/living-beings-and-water.ctx union.ctx
+#+end_src
+
+The methods ~apposition~, ~subposition~, ~composition~, ~sum~, ~intersection~, ~product~, ~semiproduct~ and ~xia-product~ are also available and work analogously.
