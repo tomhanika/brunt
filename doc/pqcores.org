@@ -3,11 +3,57 @@
 
 * Computing Cores
 
+Consider the following context:
+
+
+#+RESULTS:
+#+begin_src text
+          |constant maritime natural running stagnant 
+----------+-------------------------------------------
+canal     |x        .        .       x       .        
+channel   |x        .        .       x       .        
+lagoon    |x        x        x       .       x        
+lake      |x        .        x       .       x        
+maar      |x        .        x       .       x        
+pond      |x        .        x       .       x        
+pool      |x        .        x       .       x        
+puddle    |.        .        x       .       x        
+reservoir |x        .        .       .       x        
+river     |x        .        x       x       .        
+rivulet   |x        .        x       x       .        
+runnel    |x        .        x       x       .        
+sea       |x        x        x       .       x        
+stream    |x        .        x       x       .        
+tarn      |x        .        x       .       x        
+torrent   |x        .        x       x       .        
+trickle   |x        .        x       x       .    
+#+end_src    
+
 To compute pq-cores of a context, you may use the ~compute-core~ function:
 
 #+begin_src clojure :exports both
-java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f compute-core testing-data/bodiesofwater.ctx 2 2
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f compute-core testing-data/bodiesofwater.ctx 3 3
 #+end_src
+
+#+RESULTS:
+#+begin_src text
+        |constant natural running stagnant
+--------+----------------------------------
+lagoon  |x        x       .       x
+lake    |x        x       .       x
+maar    |x        x       .       x
+pond    |x        x       .       x
+pool    |x        x       .       x
+river   |x        x       x       .
+rivulet |x        x       x       .
+runnel  |x        x       x       .
+sea     |x        x       .       x
+stream  |x        x       x       .
+tarn    |x        x       .       x
+torrent |x        x       x       .
+trickle |x        x       x       .
+#+end_src
+
 
 To discover particular interesting cores we can investigate the sizes of all pq-cores or the concept lattice size of all pq-cores. 
 You can use the ~ctx-core-sizes~ and ~core-lattice-sizes~ functions to efficiently compute these sizes.
