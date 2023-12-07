@@ -5,7 +5,6 @@
 
 Consider the following context:
 
-
 #+RESULTS:
 #+begin_src text
           |constant maritime natural running stagnant 
@@ -52,23 +51,4 @@ stream  |x        x       x       .
 tarn    |x        x       .       x
 torrent |x        x       x       .
 trickle |x        x       x       .
-#+end_src
-
-
-To discover particular interesting cores we can investigate the sizes of all pq-cores or the concept lattice size of all pq-cores. 
-You can use the ~ctx-core-sizes~ and ~core-lattice-sizes~ functions to efficiently compute these sizes.
-
-#+begin_src clojure :exports both
-java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f ctx-core-sizes testing-data/bodiesofwater.ctx
-#+end_src
-
-#+begin_src clojure :exports both
-java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f core-lattice-sizes testing-data/bodiesofwater.ctx
-#+end_src
-
-The large-ctx-lattice-sizes-partial function uses binary search to a p,q value such that the first computed cores lattice sizes (p,1 and 1,q) have maximum value. 
-In our exemplary analysis on larger contexts we used a value of 60 which is twice as large as what we considered readable.
-
-#+begin_src clojure :exports both
-java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f large-ctx-lattice-sizes-partial testing-data/bodiesofwater.ctx 2
 #+end_src
