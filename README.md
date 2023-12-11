@@ -43,6 +43,15 @@ In case strings are provided as entries to a set, they need to be encases as wel
     $ "#{\"a\" \"b\" \"c\"}"
 
 
+## Detailed instruction can be found here:
+
+[Formal Contexts](doc/Formal-Contexts.org)   
+[Concept Lattices](doc/Concept-Lattices.org)   
+[Implications](doc/Implications.org)   
+[Exploration](doc/Exploration.org)   
+[pq Cores](doc/pqcores.org)   
+
+
 ## License
 
 Copyright © 2023 FIXME
