@@ -25,9 +25,9 @@ The Arguments of a specific function can be display with:
 
 ## Example
 
-There is an example context given in the testing-data folder. To save an image of a concept lattice in dim-draw layout, the following command can be used (directly from the fca-clj directory):
+There is an example context given in the testing-data folder. To draw an image of a concept lattice, the following command can be used (directly from the fca-clj directory):
 
-    $ java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f save-concept-lattice-dimdraw testing-data/living-beings-and-water.cxt test.png
+    $ java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f draw-context-lattice testing-data/living-beings-and-water.ctx
 
 Note that the file path from the current directory needs to be specified to access the jar file.
 
