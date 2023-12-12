@@ -36,24 +36,24 @@
               "clarify-context" ["Context File Path" "Output File Path"]
               "up-arrows" ["Context File Path"]
               "down-arrows" ["Context File Path"]
-              "reduced?" ["Context File Path"]
-              "reduce" ["Context File Path" "Output File Path"]
+              "context-reduced?" ["Context File Path"]
+              "reduce-context" ["Context File Path" "Output File Path"]
               "object-derivation" ["Context File Path" "Set of Objects"]
               "attribute-derivation" ["Context File Path" "Set of Attributes"]
-              "object-closure" ["Context File Path" "Set of Objects"]
-              "attribute-closure" ["Context File Path" "Set of Attributes"]
-              "dual" ["Context File Path" "Output File Path"]
-              "invert" ["Context File Path" "Output File Path"]
-              "apposition" ["Context File Path" "Context File Path" "Output File Path"] 
-              "subposition" ["Context File Path" "Context File Path" "Output File Path"] 
-              "composition" ["Context File Path" "Context File Path" "Output File Path"] 
-              "union" ["Context File Path" "Context File Path" "Output File Path"] 
-              "sum" ["Context File Path" "Context File Path" "Output File Path"] 
-              "intersection" ["Context File Path" "Context File Path" "Output File Path"] 
-              "product" ["Context File Path" "Context File Path" "Output File Path"] 
-              "semiproduct" ["Context File Path" "Context File Path" "Output File Path"] 
+              "context-object-closure" ["Context File Path" "Set of Objects"]
+              "context-attribute-closure" ["Context File Path" "Set of Attributes"]
+              "dual-context" ["Context File Path" "Output File Path"]
+              "invert-context" ["Context File Path" "Output File Path"]
+              "context-apposition" ["Context File Path" "Context File Path" "Output File Path"] 
+              "context-subposition" ["Context File Path" "Context File Path" "Output File Path"] 
+              "context-composition" ["Context File Path" "Context File Path" "Output File Path"] 
+              "context-union" ["Context File Path" "Context File Path" "Output File Path"] 
+              "context-sum" ["Context File Path" "Context File Path" "Output File Path"] 
+              "context-intersection" ["Context File Path" "Context File Path" "Output File Path"] 
+              "context-product" ["Context File Path" "Context File Path" "Output File Path"] 
+              "context-semiproduct" ["Context File Path" "Context File Path" "Output File Path"] 
+              "context-xia-product" ["Context File Path" "Context File Path" "Output File Path"] 
               "concept-lattice" ["Context File Path" "Output File Path"]
-              "xia-product" ["Context File Path" "Context File Path" "Output File Path"] 
               "draw-context-lattice" ["Context File Path"]
               "minimals-plus" ["Lattice File Path" "Number of Samples"]
               "close-under-implications" ["Implications File Path" "Starting Set"]
@@ -97,7 +97,7 @@
 
     "attribute-clarified?" (fn [ctx-path] (println (attribute-clarified? (read-context ctx-path))))
 
-    "context-clarified?" (fn [ctx-path] (println (object-clarified? (read-context ctx-path))))
+    "context-clarified?" (fn [ctx-path] (println (context-clarified? (read-context ctx-path))))
 
     "clarify-objects" (fn [ctx-path save-path]
                         (write-context :burmeister (clarify-objects (read-context ctx-path)) save-path))
@@ -112,9 +112,9 @@
 
     "down-arrows" (fn [ctx-path] (println (down-arrows (read-context ctx-path))))
 
-    "reduced?" (fn [ctx-path] (println (context-reduced? (read-context ctx-path))))
+    "context-reduced?" (fn [ctx-path] (println (context-reduced? (read-context ctx-path))))
 
-    "reduce" (fn [ctx-path save-path]
+    "reduce-context" (fn [ctx-path save-path]
                             (write-context :burmeister (reduce-context (read-context ctx-path)) save-path))
 
     "object-derivation" (fn [ctx-path objs]
@@ -123,43 +123,43 @@
     "attribute-derivation" (fn [ctx-path attrs]
                           (println (attribute-derivation (read-context ctx-path) (load-string attrs))))
 
-    "object-closure" (fn [ctx-path objs]
+    "context-object-closure" (fn [ctx-path objs]
                           (println (context-object-closure (read-context ctx-path) (load-string objs))))
 
-    "attribute-closure" (fn [ctx-path attrs]
+    "context-attribute-closure" (fn [ctx-path attrs]
                           (println (context-attribute-closure (read-context ctx-path) (load-string attrs))))
 
-    "dual" (fn [ctx-path save-path]
+    "dual-context" (fn [ctx-path save-path]
              (write-context :burmeister (dual-context (read-context ctx-path)) save-path))
 
-    "invert" (fn [ctx-path save-path]
+    "invert-context" (fn [ctx-path save-path]
                (write-context :burmeister (invert-context (read-context ctx-path)) save-path))
 
-    "apposition" (fn [ctx-path ctx-path2 save-path]
+    "context-apposition" (fn [ctx-path ctx-path2 save-path]
                    (write-context :burmeister (context-apposition (read-context ctx-path) (read-context ctx-path2)) save-path))
 
-    "subposition" (fn [ctx-path ctx-path2 save-path]
+    "context-subposition" (fn [ctx-path ctx-path2 save-path]
                    (write-context :burmeister (context-subposition (read-context ctx-path) (read-context ctx-path2)) save-path))
 
-    "composition" (fn [ctx-path ctx-path2 save-path]
+    "context-composition" (fn [ctx-path ctx-path2 save-path]
                    (write-context :burmeister (context-composition (read-context ctx-path) (read-context ctx-path2)) save-path))
 
-    "union" (fn [ctx-path ctx-path2 save-path]
+    "context-union" (fn [ctx-path ctx-path2 save-path]
                    (write-context :burmeister (context-union (read-context ctx-path) (read-context ctx-path2)) save-path))
 
-    "sum" (fn [ctx-path ctx-path2 save-path]
+    "context-sum" (fn [ctx-path ctx-path2 save-path]
                    (write-context :burmeister (context-sum (read-context ctx-path) (read-context ctx-path2)) save-path))
 
-    "intersection" (fn [ctx-path ctx-path2 save-path]
+    "context-intersection" (fn [ctx-path ctx-path2 save-path]
                    (write-context :burmeister (context-intersection (read-context ctx-path) (read-context ctx-path2)) save-path))
 
-    "product" (fn [ctx-path ctx-path2 save-path]
+    "context-product" (fn [ctx-path ctx-path2 save-path]
                    (write-context :burmeister (context-product (read-context ctx-path) (read-context ctx-path2)) save-path))
 
-    "semiproduct" (fn [ctx-path ctx-path2 save-path]
+    "contextsemiproduct" (fn [ctx-path ctx-path2 save-path]
                    (write-context :burmeister (context-semiproduct (read-context ctx-path) (read-context ctx-path2)) save-path))
 
-    "xia-product" (fn [ctx-path ctx-path2 save-path]
+    "context-xia-product" (fn [ctx-path ctx-path2 save-path]
                    (write-context :burmeister (context-xia-product (read-context ctx-path) (read-context ctx-path2)) save-path))
 
 
