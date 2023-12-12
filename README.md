@@ -23,7 +23,7 @@ The Arguments of a specific function can be display with:
 
     $ java -jar fca-clj-0.1.0-SNAPSHOT-standalone.jar -h [function]
 
-##Example
+## Example
 
 There is an example context given in the testing-data folder. To save an image of a concept lattice in dim-draw layout, the following command can be used (directly from the fca-clj directory):
 
@@ -31,7 +31,7 @@ There is an example context given in the testing-data folder. To save an image o
 
 Note that the file path from the current directory needs to be specified to access the jar file.
 
-##Arguments
+## Arguments
 
 Arguments such as sets need to be specified in string form, by encasing them in the " character.
 A set of integers my be input like this:
@@ -43,7 +43,7 @@ In case strings are provided as entries to a set, they need to be encases as wel
     $ "#{\"a\" \"b\" \"c\"}"
 
 
-##Detailed instruction can be found here:
+## Detailed instruction can be found here:
 
 [Formal Contexts](doc/Formal-Contexts.org)   
 [Concept Lattices](doc/Concept-Lattices.org)   
