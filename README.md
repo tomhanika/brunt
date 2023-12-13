@@ -34,7 +34,7 @@ Note that the file path from the current directory needs to be specified to acce
 ## Arguments
 
 Arguments such as sets need to be specified in string form, by encasing them in the " character.
-A set of integers my be input like this:
+A set of integers may be input like this:
 
     $ "#{1 2 3}"
 

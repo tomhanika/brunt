@@ -30,7 +30,7 @@
               "concepts" ["Context File Path"]
               "object-clarified?" ["Context File Path"]
               "attribute-clarified?" ["Context File Path"]
-              "context-clarified" ["Context File Path"]
+              "context-clarified?" ["Context File Path"]
               "clarify-objects" ["Context File Path" "Output File Path"]
               "clarify-attributes" ["Context File Path" "Output File Path"]
               "clarify-context" ["Context File Path" "Output File Path"]

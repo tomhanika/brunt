@@ -6,16 +6,14 @@
 We want to describe the facilities ~conexp-clj~ is offering for attribute
 exploration.  
 
-we will use the context ~explore.cxt~ as an example:
+We will use the context ~explore.cxt~ as an example:
 
-#+RESULTS:
 #+begin_src text
   |1 2 3 
 --+------
 a |. x . 
 b |x x . 
 c |x . x 
-
 #+end_src
 
 To explore the attributes of a context without any other features, call

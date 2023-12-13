@@ -13,7 +13,7 @@ The canonical base of a formal context can be computed like this:
 java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f canonical-base testing-data/bodiesofwater.ctx cbase.json
 #+end_src
 
-This command will save he following base:
+This command will save the following base:
 
 #+RESULTS:
 #+begin_src text
