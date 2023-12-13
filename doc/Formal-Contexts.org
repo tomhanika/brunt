@@ -123,11 +123,11 @@ To directly see whether ~bodiesofwater.ctx~ is reduced, use ~context-reduced?~, 
 obtain a reduced version call ~reduce-context~ like so:
 
 #+begin_src clojure :exports both
-java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f reduced? testing-data/bodiesofwater.ctx
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f context-reduced? testing-data/bodiesofwater.ctx
 #+end_src
 
 #+begin_src clojure :exports both
-java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f reduce testing-data/bodiesofwater.ctx bow-red.ctx
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f reduce-context testing-data/bodiesofwater.ctx bow-red.ctx
 #+end_src
 
 Be aware, that the ~reduce~ function may have a very long run time on larger contexts.
@@ -155,10 +155,10 @@ java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f attribute-deri
 #{sea lagoon maar pond tarn pool lake}
 #+end_src
 
-To compute the closure of a given set of objects or attributes in our context use ~object-closure~ or ~attribute-closure~:
+To compute the closure of a given set of objects or attributes in our context use ~context-object-closure~ or ~context-attribute-closure~:
 
 #+begin_src clojure :exports both
-java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f attribute-closure testing-data/bodiesofwater.ctx "#{\"constant\" \"natural\"}"
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f context-attribute-closure testing-data/bodiesofwater.ctx "#{\"constant\" \"natural\"}"
 #+end_src
 
 
@@ -168,15 +168,15 @@ java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f attribute-clos
 There a several further operations you can do with contexts, e.g., the context
 apposition, context subposition, and more.
 
-The ~dual~ and ~invert~ functions follow this pattern.
+The ~dual-context~ and ~invert-context~ functions follow this pattern.
 #+begin_src clojure :exports both
-java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f dual testing-data/bodiesofwater.ctx dual.ctx
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f dual-context testing-data/bodiesofwater.ctx dual.ctx
 #+end_src
 
 Operations on two contexts can be performed like this:
 
 #+begin_src clojure :exports both
-java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f union testing-data/bodiesofwater.ctx testing-data/living-beings-and-water.ctx union.ctx
+java -jar builds/uberjar/fca-clj-0.1.0-SNAPSHOT-standalone.jar -f context-union testing-data/bodiesofwater.ctx testing-data/living-beings-and-water.ctx union.ctx
 #+end_src
 
-The methods ~apposition~, ~subposition~, ~composition~, ~sum~, ~intersection~, ~product~, ~semiproduct~ and ~xia-product~ are also available and work analogously.
+The methods ~context-apposition~, ~context-subposition~, ~context-composition~, ~context-sum~, ~context-intersection~, ~context-product~, ~context-semiproduct~ and ~context-xia-product~ are also available and work analogously.

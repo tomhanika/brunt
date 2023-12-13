@@ -26,7 +26,7 @@ stream    |x        .        x       x       .
 tarn      |x        .        x       .       x        
 torrent   |x        .        x       x       .        
 trickle   |x        .        x       x       .    
-#+end_src    
+#+end_src
 
 To compute pq-cores of a context, you may use the ~compute-core~ function:
 
