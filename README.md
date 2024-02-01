@@ -1,4 +1,4 @@
-# fca-clj
+# conexp-clj command line tool
 
 A command line tool for some functions of the [conexp-clj](https://github.com/tomhanika/conexp-clj) tool for Formal Concept Analysis.
 
