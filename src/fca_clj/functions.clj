@@ -2,7 +2,7 @@
   (:require [clojure.java.io :as io]
             [clojure.tools.cli :refer [parse-opts]]
             [conexp.fca.contexts :refer :all]
-            [conexp.fca.lattices :refer [concept-lattice]]
+            [conexp.fca.lattices :refer [concept-lattice iceberg-lattice]]
             [conexp.fca.implications :refer :all]
             [conexp.fca.exploration :refer :all]
             [conexp.fca.pqcores :refer :all]
@@ -64,7 +64,8 @@
               "compute-core" ["Context File Path" "P" "Q"]
               "ctx-core-sizes" ["Context File Path"]
               "core-lattice-sizes" ["Context File Path"]
-              "large-ctx-lattice-sizes-partial" ["Context File Path" "Maximum Lattice Size"]))
+              "large-ctx-lattice-sizes-partial" ["Context File Path" "Maximum Lattice Size"]
+              "iceberg-lattice" ["Context File Path" "Minimum Support"]))
 
 
 (defn get-function
@@ -201,5 +202,10 @@
 
     "large-ctx-lattice-sizes-partial" (fn [ctx-path size]
                                         (println (large-ctx-lattice-sizes-partial (read-context ctx-path) (load-string size))))
+    "iceberg-lattice" (fn [ctx-path minsupp]
+                        (let [ctx (read-context ctx-path)
+                              latt (iceberg-lattice ctx (load-string minsupp))]
+                          (draw-lattice latt
+                                        :value-fn (comp count first))))
     nil))
 
