@@ -1,4 +1,4 @@
-(ns fca-clj.functions
+(ns brunt.functions
   (:require [clojure.java.io :as io]
             [clojure.tools.cli :refer [parse-opts]]
             [conexp.fca.contexts :refer :all]

@@ -8,7 +8,7 @@
 ;; You must not remove this notice, or any other, from this software.
 
 
-(ns fca-clj.core
+(ns brunt.core
   (:require [clojure.java.io :as io]
             [clojure.tools.cli :refer [parse-opts]]
             [conexp.fca.lattices :refer [concept-lattice]]
@@ -17,11 +17,11 @@
             [conexp.io.contexts :refer [read-context]]
             [conexp.layouts :refer [standard-layout]]
             [conexp.layouts.dim-draw :refer [dim-draw-layout]]
-            [fca-clj.functions :refer :all])
+            [brunt.functions :refer :all])
   (:gen-class))
 
 (def cli-options
-  "Command line options for fca-clj."
+  "Command line options for brunt."
   [["-f" "--function FUNCTION" "Function to be executed."]
    ["-h" "--help"]])
 

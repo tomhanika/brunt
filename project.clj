@@ -6,7 +6,7 @@
 ;; the terms of this license.
 ;; You must not remove this notice, or any other, from this software.
 
-(defproject fca-clj "0.1.0-SNAPSHOT"
+(defproject brung "0.1.0-SNAPSHOT"
   :min-lein-version "2.0.0"
   :description "A tool for formal concept analysis based on conexp-clj."
   :url "http://example.com/FIXME"
@@ -14,8 +14,8 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure   "1.11.1"]
                  [org.clojure/tools.cli "1.0.219"]
-                 [conexp-clj            "2.4.1-SNAPSHOT"]]
-  :main ^:skip-aot fca-clj.core
+                 [conexp-clj            "2.5.0-SNAPSHOT"]]
+  :main ^:skip-aot brunt.core
   :target-path "builds/%s"
   :profiles {:uberjar {:aot :all
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})

@@ -1,4 +1,4 @@
-(ns fca-clj.core-test
+(ns brunt.core-test
   (:require [clojure.test :refer :all]
             [fca-clj.core :refer :all]))
 
