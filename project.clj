@@ -6,7 +6,7 @@
 ;; the terms of this license.
 ;; You must not remove this notice, or any other, from this software.
 
-(defproject brunt "0.1.0"
+(defproject brunt "0.1.0-SNAPSHOT"
   :min-lein-version "2.0.0"
   :description "A tool for formal concept analysis based on conexp-clj."
   :url "http://example.com/FIXME"
