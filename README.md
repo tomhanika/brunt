@@ -6,7 +6,7 @@ A command line tool for some functions of the [conexp-clj](https://github.com/to
 
 The standalone jar (in builds/uberjar) can be used via:
 
-    $ java -jar brunt-0.1.0.jar [args]
+    $ java -jar brunt-0.1.0-standalone.jar [args]
 
 The following options may be used:
 
@@ -17,17 +17,17 @@ The following options may be used:
 
 All supported Functions, as well as their necessary arguments can be displayed by executing:
 
-    $ java -jar brunt-0.1.0.jar -h
+    $ java -jar brunt-0.1.0-standalone.jar -h
 
 The Arguments of a specific function can be display with:
 
-    $ java -jar brunt-0.1.0.jar -h [function]
+    $ java -jar brunt-0.1.0-standalone.jar -h [function]
 
 ## Example
 
 There is an example context given in the testing-data folder. To draw an image of a concept lattice, the following command can be used (directly from the fca-clj directory):
 
-    $ java -jar builds/uberjar/brunt-0.1.0.jar -f draw-concept-lattice testing-data/living-beings-and-water.ctx
+    $ java -jar builds/uberjar/brunt-0.1.0-standalone.jar -f draw-concept-lattice testing-data/living-beings-and-water.ctx
 
 Note that the file path from the current directory needs to be specified to access the jar file.
 
