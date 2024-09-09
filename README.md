@@ -27,7 +27,7 @@ The Arguments of a specific function can be display with:
 
 There is an example context given in the testing-data folder. To draw an image of a concept lattice, the following command can be used (directly from the fca-clj directory):
 
-    $ java -jar builds/uberjar/brunt-0.1.0-standalone.jar -f draw-concept-lattice testing-data/living-beings-and-water.ctx
+    $ java -jar brunt-0.1.0-standalone.jar -f draw-concept-lattice testing-data/living-beings-and-water.ctx
 
 Note that the file path from the current directory needs to be specified to access the jar file.
 
